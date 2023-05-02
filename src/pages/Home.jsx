@@ -1,20 +1,33 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
+
+// const API_URL_1 = "http://localhost:8000/api/workouts/";
+const API_URL_2 = "/api/workouts/";
 
 const Home = () => {
   const [workouts, setWorkouts] = useState(null);
 
+  // const fetchWorkouts = async () => {
+  //   const headers = { "Content-Type": "application/json" };
+  //   const response = await fetch("/api/workouts/", {
+  //     headers,
+  //   });
+  //   // console.log(response.json());
+  //   console.log("Yo Data\n\n", response.json());
+  //   const jsonRes = await response.json();
+  //   if (response.ok) {
+  //     setWorkouts(jsonRes);
+  //   }
+  // };
   useEffect(() => {
-    const fetchWorkouts = async () => {
-      const response = await fetch("/api/workouts/");
-      console.log("Response\n\n", response)
-      const json = await response.json();
-      console.log("JSON\n\n",json)
-      if (response.ok) {
-        setWorkouts(json);
-      }
-    };
-
-    fetchWorkouts();
+    // fetchWorkouts();
+    axios
+      .get(`/api${API_URL_2}`)
+      .then((res) => {
+        setWorkouts(res.data);
+        console.log(res.data);
+      })
+      .catch((err) => console.log("Hello\n\n", err));
   }, []);
 
   return (

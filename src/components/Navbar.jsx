@@ -8,7 +8,6 @@ const Navbar = () => {
           <h1>Workout Buddy</h1>
         </Link>
       </nav>
-      
     </header>
   );
 };

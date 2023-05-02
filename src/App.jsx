@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
+import User from "./pages/User";
 
 const App = () => {
   return (
@@ -10,6 +11,7 @@ const App = () => {
         <div className="pages">
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/user" element={<User/>} />
           </Routes>
         </div>
       </div>
