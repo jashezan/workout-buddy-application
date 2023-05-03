@@ -1,41 +1,38 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "axios";
+import { useWorkoutContext } from "../hooks/useWorkoutContext";
 
-// const API_URL_1 = "http://localhost:8000/api/workouts/";
-const API_URL_2 = "/api/workouts/";
+// Components
+import WorkoutDetails from "../components/WorkoutDetails";
+import WorkoutForm from "../components/WorkoutForm";
 
 const Home = () => {
-  const [workouts, setWorkouts] = useState(null);
-
-  // const fetchWorkouts = async () => {
-  //   const headers = { "Content-Type": "application/json" };
-  //   const response = await fetch("/api/workouts/", {
-  //     headers,
-  //   });
-  //   // console.log(response.json());
-  //   console.log("Yo Data\n\n", response.json());
-  //   const jsonRes = await response.json();
-  //   if (response.ok) {
-  //     setWorkouts(jsonRes);
-  //   }
-  // };
+  const {workouts, dispatch} = useWorkoutContext();
+  const fetchWorkouts = async () => {
+    const API_URL = "http://localhost:8000/api/workouts/";
+    const response = await axios.get(API_URL);
+    const jsonRes = await response.data;
+    if (response) {
+      dispatch({type: 'SET_WORKOUT', payload: jsonRes})
+    }
+  };
   useEffect(() => {
-    // fetchWorkouts();
-    axios
-      .get(`/api${API_URL_2}`)
-      .then((res) => {
-        setWorkouts(res.data);
-        console.log(res.data);
-      })
-      .catch((err) => console.log("Hello\n\n", err));
+    try {
+      fetchWorkouts();
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   return (
     <div className="home">
       <div className="workouts">
         {workouts &&
-          workouts.map((workout) => <h1 key={workout._id}>{workout}</h1>)}
+          workouts.map((workout) => {
+            return <WorkoutDetails workout={workout} key={workout._id} />;
+          })}
       </div>
+      <WorkoutForm/>
     </div>
   );
 };
