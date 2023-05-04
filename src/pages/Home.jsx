@@ -8,21 +8,21 @@ import WorkoutForm from "../components/WorkoutForm";
 
 const Home = () => {
   const {workouts, dispatch} = useWorkoutContext();
-  const fetchWorkouts = async () => {
-    const API_URL = "http://localhost:8000/api/workouts/";
-    const response = await axios.get(API_URL);
-    const jsonRes = await response.data;
-    if (response) {
-      dispatch({type: 'SET_WORKOUT', payload: jsonRes})
-    }
-  };
   useEffect(() => {
+    const fetchWorkouts = async () => {
+      const API_URL = "http://localhost:8000/api/workouts/";
+      const response = await axios.get(API_URL);
+      const jsonRes = await response.data;
+      if (response) {
+        dispatch({type: 'SET_WORKOUT', payload: jsonRes})
+      }
+    };
     try {
       fetchWorkouts();
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="home">

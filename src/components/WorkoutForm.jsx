@@ -4,11 +4,12 @@ import { useState } from "react";
 import { useWorkoutContext } from "../hooks/useWorkoutContext";
 
 const WorkoutForm = () => {
-  const {dispatch} = useWorkoutContext();
+  const { dispatch } = useWorkoutContext();
   const [title, setTitle] = useState("");
   const [load, setLoad] = useState("");
   const [reps, setReps] = useState("");
   const [error, setError] = useState(null);
+  const [emptyFileds, setEmptyFields] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,8 +27,11 @@ const WorkoutForm = () => {
             setTitle("");
             setLoad("");
             setReps("");
-            dispatch({type: 'CREATE_WORKOUT', payload: response.data})
+            dispatch({ type: "CREATE_WORKOUT", payload: response.data });
             console.log("new workout added:", response.data);
+          }
+          if (response.data.emptyFileds.length > 0) {
+            setEmptyFields(response.data.emptyFileds);
           }
         })
         .catch((error) => {
@@ -45,6 +49,7 @@ const WorkoutForm = () => {
         type="text"
         onChange={(e) => setTitle(e.target.value)}
         value={title}
+        className={emptyFileds.includes("title") ? "error" : ""}
         required
       />
 
@@ -54,6 +59,7 @@ const WorkoutForm = () => {
         onChange={(e) => setLoad(e.target.value)}
         value={load}
         required
+        className={emptyFileds.includes("load") ? "error" : ""}
       />
 
       <label>Number of Reps:</label>
@@ -62,6 +68,7 @@ const WorkoutForm = () => {
         onChange={(e) => setReps(e.target.value)}
         value={reps}
         required
+        className={emptyFileds.includes("reps") ? "error" : ""}
       />
 
       <button type="submit">Add Workout</button>
