@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 
 import { useWorkoutContext } from "../hooks/useWorkoutContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const WorkoutForm = () => {
   const { dispatch } = useWorkoutContext();
@@ -10,16 +11,23 @@ const WorkoutForm = () => {
   const [reps, setReps] = useState("");
   const [error, setError] = useState(null);
   const [emptyFileds, setEmptyFields] = useState([]);
+  const {user} = useAuthContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (!user) {
+      setError("You must be logged in to add a workout");
+      return;
+    }
     const workout = { title, load, reps };
 
     if (workout.title !== "" && workout.reps && workout.load) {
       axios
         .post("http://localhost:8000/api/workouts/", workout, {
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
         })
         .then((response) => {
           if (response.statusText === "OK") {
@@ -28,7 +36,7 @@ const WorkoutForm = () => {
             setLoad("");
             setReps("");
             dispatch({ type: "CREATE_WORKOUT", payload: response.data });
-            console.log("new workout added:", response.data);
+            // console.log("new workout added:", response.data);
           }
           if (response.data.emptyFileds.length > 0) {
             setEmptyFields(response.data.emptyFileds);

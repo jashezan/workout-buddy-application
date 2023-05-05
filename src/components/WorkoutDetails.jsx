@@ -1,11 +1,20 @@
 import axios from "axios";
 import { useWorkoutContext } from "../hooks/useWorkoutContext";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const WorkoutDetails = ({ workout }) => {
   const { dispatch } = useWorkoutContext();
+  const {user} = useAuthContext();
 
   const handleDelete = async () => {
-    const response = await axios.delete('http://localhost:8000/api/workouts/' + workout._id);
+    if (!user) {
+      return;
+    }
+    const response = await axios.delete(`http://localhost:8000/api/workouts/${workout._id}`, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      }
+    });
     const jsonRes = await response.data;
 
     if(jsonRes){
