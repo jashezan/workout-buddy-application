@@ -1,10 +1,8 @@
 ## Project Name: Workout Buddy 
 
-MERN application for a workout app that allows users to create and track daily workouts. 
+Backend for a workout app that allows users to create and track daily workouts. 
 
-- Frontend repo can be found [here](./workout-buddy-frontend/)
-
-- Backend repo can be found [here](./workout-buddy-backend/)
+Frontend repo can be found [here](https://github.com/jashezan/workout-buddy-frontend)
 
 ## Project Status
 
@@ -13,7 +11,7 @@ I have a few more features I'd like to add, but I'm ready to deploy this app and
 ## Project Screen Shot(s)
  
 
-![ workout buddy ](./workout-buddy-backend/assets/workout-buddy-mern-stack.png)
+![ workout buddy ](./assets/workout-buddy-mern-stack.png)
 
 ## Installation and Setup Instructions
 
@@ -30,4 +28,10 @@ To Start Server:
 
 ```
 yarn start
+```
+
+To Visit App:
+
+```
+localhost:3000/
 ```
