@@ -13,7 +13,8 @@ I have a few more features I'd like to add, but I'm ready to deploy this app and
 ## Project Screen Shot(s)
  
 
-![ workout buddy ](./workout-buddy-backend/assets/workout-buddy-mern-stack.png)
+![ workout buddy ](https://cdn.jsdelivr.net/gh/jashezan/workout-buddy-application@main/mern-workout-backend/assets/workout-buddy-mern-stack.png)
+
 
 ## Installation and Setup Instructions
 
